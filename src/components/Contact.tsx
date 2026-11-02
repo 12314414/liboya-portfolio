@@ -19,12 +19,12 @@ function GithubIcon({ className }: { className?: string }) {
 const contactLinks = [
   {
     name: 'GitHub',
-    href: '#', // TODO: 替换为你的 GitHub 主页地址
+    href: 'https://github.com/12314414',
     icon: GithubIcon,
   },
   {
     name: '邮箱',
-    href: 'mailto:your-email@example.com', // TODO: 替换为你的邮箱地址
+    href: 'mailto:yuxinghe9999@qq.com',
     icon: Mail,
   },
 ]
