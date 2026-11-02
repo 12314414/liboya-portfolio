@@ -1,16 +1,16 @@
 /**
- * EdgeOne Edge Function: DashScope AI 代理
+ * EdgeOne Node Function: DashScope AI 代理
  *
- * 文件路径: ./edge-functions/api/interview.js
+ * 文件路径: ./node-functions/api/interview.js
  * 访问路径: /api/interview
  *
  * 作用: 接收前端传来的求职信息，调用阿里云通义千问 API，返回 JSON 结果
  *       API Key 通过 context.env.QWEN_API_KEY（服务端环境变量）读取，永不暴露给前端
  *
- * 限制:
- * - 仅支持 JavaScript（ES2023+），不支持 TypeScript
- * - 单次 CPU 时间片 200ms（I/O 不计入），fetch 远程 AI API 完全够用
- * - fetch 远程 API 由边缘节点发出，不受浏览器 CORS 限制
+ * Node Functions 优势（比 Edge Functions 更适合调远程 API）：
+ * - Node.js v20 运行时，fetch natively 支持
+ * - 墙上时间限制 30s（Edge Functions 仅 200ms CPU 时间片）
+ * - 代码包 128MB / 请求体 6MB（Edge 分别 5MB / 1MB）
  */
 
 // ============ 常量 ============
@@ -87,7 +87,7 @@ export async function onRequestPost(context) {
     return jsonError('缺少必填字段：experience / categoryName / targetPosition', 400)
   }
 
-  // 3. 调用 DashScope API（边缘节点发起 fetch，绕过浏览器 CORS + 隐藏 Key）
+  // 3. 调用 DashScope API（Node Function 发起 fetch，绕过浏览器 CORS + 隐藏 Key）
   try {
     const aiResp = await fetch(QWEN_API_URL, {
       method: 'POST',
