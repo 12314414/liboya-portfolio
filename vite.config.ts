@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // Vite 配置：React 插件 + Tailwind CSS v4 官方插件
-// base 使用相对路径，便于部署到 GitHub Pages 等子路径站点
-export default defineConfig({
-  base: './',
+// 生产环境部署到 https://12314414.github.io/liboya-portfolio/
+// base 路径需要加仓库名前缀，开发环境用根路径即可
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/liboya-portfolio/' : '/',
   plugins: [react(), tailwindcss()],
-})
+}))
