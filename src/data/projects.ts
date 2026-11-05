@@ -23,7 +23,7 @@ export const projects: Project[] = [
       '一款基于大语言模型视觉能力的 AI 应用。用户上传冰箱食材照片，AI 即可智能识别并推荐"三菜一汤"。项目支持疾病忌口自动排除（如糖尿病规避高糖）、多菜品组合烹饪时间规划、以及用户登录与历史记录存储等功能。',
     techStack: ['LLM 应用开发', '千问大模型接入', 'Prompt Engineering', 'AIGC 交互', 'AI Agent'],
     link: '#',
-    demo: 'https://app-eil8f1799ptt.miaoda.online',
+    demo: 'https://12314414.github.io/today-eats/',
     cover: todayEatCover,
   },
   {

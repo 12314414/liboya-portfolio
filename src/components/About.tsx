@@ -1,11 +1,42 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, Compass } from 'lucide-react'
+import { GraduationCap, Compass, Users, Camera } from 'lucide-react'
 import { skills } from '../data/skills'
 
 /**
+ * 四个信息模块（图标 + 标题 + 正文）
+ * 文案集中在此处，后续替换真实内容只需修改 content 字段。
+ */
+const aboutModules = [
+  {
+    icon: GraduationCap,
+    title: '教育背景',
+    content:
+      '数字经济专业本科在读，主修经济学原理、数据分析、数字贸易等课程，具备经济学与信息技术交叉的复合视角。',
+  },
+  {
+    icon: Compass,
+    title: '学习方向',
+    content:
+      '目前专注于前端开发（React / TypeScript / Tailwind CSS），同时在探索 Python 数据分析与 AI 应用开发，希望用技术把专业知识变成真正好用的产品。',
+  },
+  {
+    icon: Users,
+    title: '校园与项目经历',
+    content:
+      '担任学生会宣传部干事，负责活动海报设计与公众号推文排版；曾参与校级数字经济创新创业大赛，与 3 人小组完成校园消费调研报告。',
+  },
+  {
+    icon: Camera,
+    title: '兴趣爱好',
+    content:
+      '热爱摄影与旅行，擅长用镜头记录城市与校园的细节；日常也喜欢阅读商业与科技类书籍，关注产品背后的商业逻辑。',
+  },
+]
+
+/**
  * About 关于我 & 技能：
- * 左栏为文字介绍（教育背景 + 学习方向），右栏为技能标签云。
- * 技能数据全部来自 data/skills.ts，通过 .map() 遍历渲染（数据与视图解耦）。
+ * 上方为 2×2 毛玻璃卡片网格（教育背景 / 学习方向 / 校园经历 / 兴趣爱好），
+ * 下方为整行技能标签云。技能数据来自 data/skills.ts，通过 .map() 遍历渲染。
  */
 function About() {
   return (
@@ -22,83 +53,68 @@ function About() {
         <div className="mt-3 h-1.5 w-16 rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277]" />
       </motion.div>
 
-      {/* ===== 左右两栏布局：移动端堆叠，md 及以上并排 ===== */}
-      <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-        {/* ---------- 左栏：文字介绍（从左侧滑入） ---------- */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-          // 毛玻璃卡片：半透明白底 + 白色细边框 + 背景模糊 + 轻阴影
-          className="flex flex-col gap-8 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md"
-        >
-          {/* 教育背景（文案可直接在此修改） */}
-          <div className="flex gap-4">
-            {/* 图标底托：品牌渐变圆角方块 */}
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
-              <GraduationCap className="h-6 w-6 text-white" />
+      {/* ===== 四张信息卡片：移动端单列，md 及以上 2×2 网格 ===== */}
+      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+        {aboutModules.map(({ icon: Icon, title, content }, index) => (
+          <motion.article
+            key={title}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            // 依次淡入，营造从左到右的阅读节奏
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            // 悬浮时卡片轻微上浮并加深阴影
+            whileHover={{ y: -5 }}
+            className="flex h-full flex-col gap-4 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-[#678EC9]/20"
+          >
+            {/* 图标 + 标题：图标底托使用品牌渐变小面积强调 */}
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
+                <Icon className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">{title}</h3>
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900">教育背景</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                数字经济专业本科在读，主修经济学原理、数据分析、数字贸易等课程，具备经济学与信息技术交叉的复合视角。
-              </p>
-            </div>
-          </div>
-
-          {/* 学习方向（文案可直接在此修改） */}
-          <div className="flex gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
-              <Compass className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900">学习方向</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                目前专注于前端开发（React / TypeScript / Tailwind CSS），同时在探索
-                Python 数据分析与 AI 应用开发，希望用技术把专业知识变成真正好用的产品。
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ---------- 右栏：技能标签云（从右侧滑入） ---------- */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6 }}
-          className="rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md"
-        >
-          <h3 className="text-lg font-bold text-slate-900">技能标签</h3>
-
-          {/* 标签云：圆角胶囊 + 渐变底色；每隔两个使用实心渐变高亮，营造云的层次感 */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            {skills.map((skill, index) => {
-              // 第 1、4、7... 个标签使用实心品牌渐变高亮，其余使用浅渐变
-              const isHighlight = index % 3 === 0
-              return (
-                <motion.span
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.06 }}
-                  className={
-                    isHighlight
-                      ? // 高亮标签：实心品牌渐变 + 白字 + 柔和投影
-                        'rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-4 py-1.5 text-sm font-medium text-white shadow-md shadow-[#678EC9]/30'
-                      : // 普通标签：浅渐变底 + 深紫蓝文字
-                        'rounded-full bg-gradient-to-r from-[#678EC9]/15 to-[#262277]/10 px-4 py-1.5 text-sm font-medium text-[#262277]'
-                  }
-                >
-                  {skill}
-                </motion.span>
-              )
-            })}
-          </div>
-        </motion.div>
+            <p className="text-sm leading-relaxed text-slate-500">{content}</p>
+          </motion.article>
+        ))}
       </div>
+
+      {/* ===== 技能标签云：整行毛玻璃卡片，置于四卡网格下方 ===== */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="mt-6 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md"
+      >
+        <h3 className="text-lg font-bold text-slate-900">技能标签</h3>
+
+        {/* 标签云：圆角胶囊 + 渐变底色；每隔两个使用实心渐变高亮，营造云的层次感 */}
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          {skills.map((skill, index) => {
+            // 第 1、4、7... 个标签使用实心品牌渐变高亮，其余使用浅渐变
+            const isHighlight = index % 3 === 0
+            return (
+              <motion.span
+                key={skill}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.06 }}
+                className={
+                  isHighlight
+                    ? // 高亮标签：实心品牌渐变 + 白字 + 柔和投影
+                      'rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-4 py-1.5 text-sm font-medium text-white shadow-md shadow-[#678EC9]/30'
+                    : // 普通标签：浅渐变底 + 深紫蓝文字
+                      'rounded-full bg-gradient-to-r from-[#678EC9]/15 to-[#262277]/10 px-4 py-1.5 text-sm font-medium text-[#262277]'
+                }
+              >
+                {skill}
+              </motion.span>
+            )
+          })}
+        </div>
+      </motion.div>
     </section>
   )
 }
