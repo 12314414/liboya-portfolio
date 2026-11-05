@@ -1,6 +1,7 @@
 // 项目封面图：由 Vite 打包时生成带哈希的相对路径，部署到子目录也能正确加载
 import todayEatCover from '../assets/projects/today-eat-cover.jpg'
 import healingFocusTimerCover from '../assets/projects/healing-focus-timer-cover.jpg'
+import aiInterviewCover from '../assets/projects/ai-interview-cover.png'
 
 // 项目数据的类型定义
 export interface Project {
@@ -42,5 +43,6 @@ export const projects: Project[] = [
       '基于大语言模型开发的求职辅助工具。用户输入个人经历并选择目标岗位，AI 将自动生成定制化简历修改建议，并模拟真实面试官提出 3 个核心面试问题。',
     techStack: ['React Router', 'LLM API', 'Prompt 工程', '表单交互'],
     link: '/interview',
+    cover: aiInterviewCover,
   },
 ]
