@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, Compass, Users, Camera } from 'lucide-react'
+import { GraduationCap, Compass, Camera, Code2 } from 'lucide-react'
 import { skills } from '../data/skills'
 
 /**
- * 四个信息模块（图标 + 标题 + 正文）
+ * 三个文字信息模块（图标 + 标题 + 正文）
  * 文案集中在此处，后续替换真实内容只需修改 content 字段。
+ * 技能标签卡片作为第四格直接在下方 JSX 中渲染。
  */
 const aboutModules = [
   {
@@ -20,12 +21,6 @@ const aboutModules = [
       '目前专注于前端开发（React / TypeScript / Tailwind CSS），同时在探索 Python 数据分析与 AI 应用开发，希望用技术把专业知识变成真正好用的产品。',
   },
   {
-    icon: Users,
-    title: '校园与项目经历',
-    content:
-      '担任学生会宣传部干事，负责活动海报设计与公众号推文排版；曾参与校级数字经济创新创业大赛，与 3 人小组完成校园消费调研报告。',
-  },
-  {
     icon: Camera,
     title: '兴趣爱好',
     content:
@@ -33,10 +28,36 @@ const aboutModules = [
   },
 ]
 
+/** 单个信息卡片：图标 + 标题 + 正文，带依次淡入与悬浮上浮动画 */
+function InfoCard({ module, index }: { module: (typeof aboutModules)[number]; index: number }) {
+  const { icon: Icon, title, content } = module
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      // 依次淡入，营造从左到右的阅读节奏
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      // 悬浮时卡片轻微上浮并加深阴影
+      whileHover={{ y: -5 }}
+      className="flex h-full flex-col gap-4 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-[#678EC9]/20"
+    >
+      {/* 图标 + 标题：图标底托使用品牌渐变小面积强调 */}
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
+          <Icon className="h-6 w-6 text-white" />
+        </div>
+        <h3 className="text-lg font-bold text-slate-900">{title}</h3>
+      </div>
+      <p className="text-sm leading-relaxed text-slate-500">{content}</p>
+    </motion.article>
+  )
+}
+
 /**
  * About 关于我 & 技能：
- * 上方为 2×2 毛玻璃卡片网格（教育背景 / 学习方向 / 校园经历 / 兴趣爱好），
- * 下方为整行技能标签云。技能数据来自 data/skills.ts，通过 .map() 遍历渲染。
+ * 2×2 毛玻璃卡片网格 —— 教育背景 / 学习方向 / 技能标签 / 兴趣爱好。
+ * 技能数据来自 data/skills.ts，通过 .map() 遍历渲染。
  */
 function About() {
   return (
@@ -53,68 +74,58 @@ function About() {
         <div className="mt-3 h-1.5 w-16 rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277]" />
       </motion.div>
 
-      {/* ===== 四张信息卡片：移动端单列，md 及以上 2×2 网格 ===== */}
+      {/* ===== 四张卡片：移动端单列，md 及以上 2×2 网格 ===== */}
       <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
-        {aboutModules.map(({ icon: Icon, title, content }, index) => (
-          <motion.article
-            key={title}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            // 依次淡入，营造从左到右的阅读节奏
-            transition={{ duration: 0.5, delay: index * 0.08 }}
-            // 悬浮时卡片轻微上浮并加深阴影
-            whileHover={{ y: -5 }}
-            className="flex h-full flex-col gap-4 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-[#678EC9]/20"
-          >
-            {/* 图标 + 标题：图标底托使用品牌渐变小面积强调 */}
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
-                <Icon className="h-6 w-6 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">{title}</h3>
+        {/* 第一行：教育背景 / 学习方向 */}
+        <InfoCard module={aboutModules[0]} index={0} />
+        <InfoCard module={aboutModules[1]} index={1} />
+
+        {/* 第二行左侧：技能标签卡片（占据原校园经历的位置） */}
+        <motion.article
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, delay: 0.16 }}
+          whileHover={{ y: -5 }}
+          className="flex h-full flex-col gap-4 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-[#678EC9]/20"
+        >
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFCEE3] via-[#678EC9] to-[#262277] shadow-lg shadow-[#678EC9]/30">
+              <Code2 className="h-6 w-6 text-white" />
             </div>
-            <p className="text-sm leading-relaxed text-slate-500">{content}</p>
-          </motion.article>
-        ))}
+            <h3 className="text-lg font-bold text-slate-900">技能标签</h3>
+          </div>
+
+          {/* 标签云：圆角胶囊 + 渐变底色；每隔两个使用实心渐变高亮，营造云的层次感 */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {skills.map((skill, index) => {
+              // 第 1、4、7... 个标签使用实心品牌渐变高亮，其余使用浅渐变
+              const isHighlight = index % 3 === 0
+              return (
+                <motion.span
+                  key={skill}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.06 }}
+                  className={
+                    isHighlight
+                      ? // 高亮标签：实心品牌渐变 + 白字 + 柔和投影
+                        'rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-4 py-1.5 text-sm font-medium text-white shadow-md shadow-[#678EC9]/30'
+                      : // 普通标签：浅渐变底 + 深紫蓝文字
+                        'rounded-full bg-gradient-to-r from-[#678EC9]/15 to-[#262277]/10 px-4 py-1.5 text-sm font-medium text-[#262277]'
+                  }
+                >
+                  {skill}
+                </motion.span>
+              )
+            })}
+          </div>
+        </motion.article>
+
+        {/* 第二行右侧：兴趣爱好 */}
+        <InfoCard module={aboutModules[2]} index={3} />
       </div>
-
-      {/* ===== 技能标签云：整行毛玻璃卡片，置于四卡网格下方 ===== */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="mt-6 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md"
-      >
-        <h3 className="text-lg font-bold text-slate-900">技能标签</h3>
-
-        {/* 标签云：圆角胶囊 + 渐变底色；每隔两个使用实心渐变高亮，营造云的层次感 */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          {skills.map((skill, index) => {
-            // 第 1、4、7... 个标签使用实心品牌渐变高亮，其余使用浅渐变
-            const isHighlight = index % 3 === 0
-            return (
-              <motion.span
-                key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.06 }}
-                className={
-                  isHighlight
-                    ? // 高亮标签：实心品牌渐变 + 白字 + 柔和投影
-                      'rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-4 py-1.5 text-sm font-medium text-white shadow-md shadow-[#678EC9]/30'
-                    : // 普通标签：浅渐变底 + 深紫蓝文字
-                      'rounded-full bg-gradient-to-r from-[#678EC9]/15 to-[#262277]/10 px-4 py-1.5 text-sm font-medium text-[#262277]'
-                }
-              >
-                {skill}
-              </motion.span>
-            )
-          })}
-        </div>
-      </motion.div>
     </section>
   )
 }
