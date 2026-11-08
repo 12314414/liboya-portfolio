@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, Compass, Camera, Code2 } from 'lucide-react'
+import { GraduationCap, Compass, Camera, Code2, Trophy } from 'lucide-react'
 import { skills } from '../data/skills'
+import { awards } from '../data/awards'
 
 /**
  * 三个文字信息模块（图标 + 标题 + 正文）
@@ -126,6 +127,34 @@ function About() {
         {/* 第二行右侧：兴趣爱好 */}
         <InfoCard module={aboutModules[2]} index={3} />
       </div>
+
+      {/* ===== 荣誉与奖项：横跨整行的毛玻璃区块，移动端可横向滑动 ===== */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.5, delay: 0.32 }}
+        className="mt-6 rounded-2xl border border-white/50 bg-white/40 p-8 shadow-sm backdrop-blur-md"
+      >
+        <h3 className="text-lg font-bold text-slate-900">荣誉与奖项</h3>
+
+        {/* 移动端：横向滚动；md 及以上：紧凑网格 */}
+        <div className="mt-5 flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+          {awards.map((award, index) => (
+            <motion.div
+              key={award}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.08 }}
+              className="flex shrink-0 items-center gap-3 rounded-xl border border-white/60 bg-white/50 px-4 py-3 shadow-sm"
+            >
+              <Trophy className="h-5 w-5 shrink-0 text-[#678EC9]" />
+              <span className="text-sm font-medium text-slate-800">{award}</span>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </section>
   )
 }
