@@ -29,7 +29,7 @@ function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-1.5 text-sm text-slate-600 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-1.5 text-base text-slate-600 shadow-sm"
           >
             ✨ HELLO / 你好
           </motion.span>
@@ -40,7 +40,7 @@ function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-6xl"
+            className="mt-6 text-5xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-7xl"
           >
             Hi, 我是李博雅
           </motion.h1>
@@ -51,7 +51,7 @@ function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-4 bg-gradient-to-r from-[#678EC9] to-[#262277] bg-clip-text text-2xl font-semibold text-transparent md:text-3xl"
+            className="mt-4 bg-gradient-to-r from-[#678EC9] to-[#262277] bg-clip-text text-3xl font-semibold text-transparent md:text-4xl"
           >
             数字经济专业大学生
           </motion.p>
@@ -62,7 +62,7 @@ function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5, delay: 0.45 }}
-            className="mt-4 max-w-md leading-relaxed text-slate-500"
+            className="mt-4 max-w-md text-base leading-relaxed text-slate-500"
           >
             欢迎来到我的个人作品集，这里记录着我在数字经济与前端开发方向上的学习成果与项目实践。
           </motion.p>
@@ -78,7 +78,7 @@ function Hero() {
             {/* 主按钮「查看作品」：品牌渐变胶囊，悬浮轻微放大 */}
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#678EC9]/30 transition-transform duration-300 hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#FFCEE3] via-[#678EC9] to-[#262277] px-7 py-3.5 text-base font-medium text-white shadow-lg shadow-[#678EC9]/30 transition-transform duration-300 hover:scale-105"
             >
               查看作品
               <ArrowRight className="h-4 w-4" />
@@ -87,7 +87,7 @@ function Hero() {
             {/* 次按钮「联系我」：白底 + 浅灰描边，悬浮时描边变为品牌蓝 */}
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:border-[#678EC9] hover:text-[#262277]"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-7 py-3.5 text-base font-medium text-slate-700 shadow-sm transition-colors hover:border-[#678EC9] hover:text-[#262277]"
             >
               联系我
               <Mail className="h-4 w-4" />
@@ -100,25 +100,25 @@ function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="pointer-events-none relative -z-10 hidden h-[380px] md:block"
+          className="relative hidden h-[380px] md:block"
         >
           {/* 大气泡：右上，淡粉渐变玻璃质感，缓慢上下漂浮 */}
           <motion.div
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute right-8 top-4 h-56 w-56 rounded-full border border-white/50 bg-gradient-to-br from-[#FFCEE3]/40 to-[#678EC9]/20 opacity-50 blur-2xl"
+            className="absolute right-8 top-4 h-56 w-56 rounded-full border border-white/90 bg-gradient-to-br from-[#FFCEE3]/70 to-[#678EC9]/35 shadow-xl shadow-[#678EC9]/15 backdrop-blur-md"
           />
           {/* 中气泡：左下，淡蓝渐变，错峰反向漂浮 */}
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-            className="absolute bottom-8 left-6 h-32 w-32 rounded-full border border-white/50 bg-gradient-to-br from-white/40 to-[#678EC9]/20 opacity-50 blur-xl"
+            className="absolute bottom-8 left-6 h-32 w-32 rounded-full border border-white/90 bg-gradient-to-br from-white/80 to-[#678EC9]/40 shadow-lg shadow-[#678EC9]/10 backdrop-blur-md"
           />
           {/* 小气泡：中间点缀 */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute bottom-24 right-24 h-16 w-16 rounded-full border border-white/50 bg-white/30 opacity-40 blur-lg"
+            className="absolute bottom-24 right-24 h-16 w-16 rounded-full border border-white/90 bg-white/70 shadow-md backdrop-blur-md"
           />
         </motion.div>
       </div>
