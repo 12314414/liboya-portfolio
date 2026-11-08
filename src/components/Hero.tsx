@@ -100,25 +100,25 @@ function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="relative hidden h-[380px] md:block"
+          className="pointer-events-none relative -z-10 hidden h-[380px] md:block"
         >
           {/* 大气泡：右上，淡粉渐变玻璃质感，缓慢上下漂浮 */}
           <motion.div
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute right-8 top-4 h-56 w-56 rounded-full border border-white/90 bg-gradient-to-br from-[#FFCEE3]/70 to-[#678EC9]/35 shadow-xl shadow-[#678EC9]/15 backdrop-blur-md"
+            className="absolute right-8 top-4 h-56 w-56 rounded-full border border-white/50 bg-gradient-to-br from-[#FFCEE3]/40 to-[#678EC9]/20 opacity-50 blur-2xl"
           />
           {/* 中气泡：左下，淡蓝渐变，错峰反向漂浮 */}
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-            className="absolute bottom-8 left-6 h-32 w-32 rounded-full border border-white/90 bg-gradient-to-br from-white/80 to-[#678EC9]/40 shadow-lg shadow-[#678EC9]/10 backdrop-blur-md"
+            className="absolute bottom-8 left-6 h-32 w-32 rounded-full border border-white/50 bg-gradient-to-br from-white/40 to-[#678EC9]/20 opacity-50 blur-xl"
           />
           {/* 小气泡：中间点缀 */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute bottom-24 right-24 h-16 w-16 rounded-full border border-white/90 bg-white/70 shadow-md backdrop-blur-md"
+            className="absolute bottom-24 right-24 h-16 w-16 rounded-full border border-white/50 bg-white/30 opacity-40 blur-lg"
           />
         </motion.div>
       </div>
